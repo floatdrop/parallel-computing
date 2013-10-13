@@ -4,10 +4,8 @@ public class MyPhilosopher extends Philosopher implements Runnable {
 
     volatile boolean stopFlag = false;
 
-    public MyPhilosopher(int position, Fork left, Fork right, int thinkingTime, int eatingTime) {
-        super(position, left, right);
-        this.thinkingTime = thinkingTime;
-        this.eatingTime = eatingTime;
+    public MyPhilosopher(int position, Fork left, Fork right, int maxThinkingTime, int maxEatingTime) {
+        super(position, left, right, maxThinkingTime, maxEatingTime);
     }
 
     public void run() {
