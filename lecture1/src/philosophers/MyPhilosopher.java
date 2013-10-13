@@ -1,5 +1,7 @@
 package philosophers;
 
+import java.util.concurrent.TimeUnit;
+
 public class MyPhilosopher extends Philosopher implements Runnable {
 
     volatile boolean stopFlag = false;
@@ -11,14 +13,18 @@ public class MyPhilosopher extends Philosopher implements Runnable {
     public void run() {
         while (!stopFlag) {
             think();
-            if (left.hold.tryLock()) {
-                System.out.println("[Philosopher " + position + "] took left fork");
-                if (right.hold.tryLock()) {
-                    System.out.println("[Philosopher " + position + "] took right fork");
-                    eat();
-                    right.hold.unlock();
+            try {
+                if (left.hold.tryLock(this.maxEatingTime, TimeUnit.MILLISECONDS)) {
+                    System.out.println("[Philosopher " + position + "] took left fork");
+                    if (right.hold.tryLock(this.maxEatingTime, TimeUnit.MILLISECONDS)) {
+                        System.out.println("[Philosopher " + position + "] took right fork");
+                        eat();
+                        right.hold.unlock();
+                    }
+                    left.hold.unlock();
                 }
-                left.hold.unlock();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
         System.out.println("[Philosopher " + position + "] stopped");

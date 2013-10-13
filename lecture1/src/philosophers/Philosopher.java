@@ -4,8 +4,8 @@ import java.util.Random;
 
 public class Philosopher {
 
-    private final int maxEatingTime;
-    private final int maxThinkingTime;
+    public final int maxEatingTime;
+    public final int maxThinkingTime;
     int position;
     Fork left;
     Fork right;
