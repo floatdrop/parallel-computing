@@ -3,8 +3,8 @@ package philosophers;
 public class Run {
 
     static int count = 5;
-    static int thinkingTime = 100;
-    static int eatingTime = 100;
+    static int maxThinkingTime = 100;
+    static int maxEatingTime = 100;
     static int workingTime = 60000;
     static boolean debug = false;
 
@@ -17,7 +17,7 @@ public class Run {
         Fork left = last;
         for (int i = 0; i < count; i++) {
             Fork right = (i == count - 1) ? last : new Fork();
-            phils[i] = new MyPhilosopher(i, left, right, eatingTime, thinkingTime);
+            phils[i] = new MyPhilosopher(i, left, right, maxEatingTime, maxThinkingTime);
             left = right;
         }
 
@@ -45,8 +45,8 @@ public class Run {
     public static void parseArguments(String[] args) {
         count = args.length > 0 ? Integer.parseInt(args[0]) : count;
         workingTime = args.length > 1 ? Integer.parseInt(args[1]) * 1000 : workingTime;
-        thinkingTime = args.length > 2 ? Integer.parseInt(args[2]) : thinkingTime;
-        eatingTime = args.length > 3 ? Integer.parseInt(args[3]) : eatingTime;
+        maxThinkingTime = args.length > 2 ? Integer.parseInt(args[2]) : maxThinkingTime;
+        maxEatingTime = args.length > 3 ? Integer.parseInt(args[3]) : maxEatingTime;
         debug = args.length > 4 ? args[4].equals("1") : debug;
     }
 

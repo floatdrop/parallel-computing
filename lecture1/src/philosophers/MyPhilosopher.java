@@ -11,13 +11,12 @@ public class MyPhilosopher extends Philosopher implements Runnable {
     public void run() {
         while (!stopFlag) {
             think();
-            synchronized (left) {
-                System.out.println("[Philosopher " + position + "] took left fork");
-                synchronized (right) {
-                    System.out.println("[Philosopher " + position + "] took right fork");
-                    eat();
-                }
-            }
+            System.out.println("[Philosopher " + position + "] acquiring left fork");
+            if (!left.acquire(this)) continue;
+            System.out.println("[Philosopher " + position + "] acquiring right fork");
+            if (!right.acquire(this)) continue;
+            eat();
+
         }
         System.out.println("[Philosopher " + position + "] stopped");
     }
