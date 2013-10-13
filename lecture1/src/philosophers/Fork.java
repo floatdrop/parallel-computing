@@ -5,17 +5,20 @@ public class Fork {
     Philosopher owner;
 
     public synchronized boolean acquire(Philosopher phil) {
-        if (!clean) {
-            System.out.println("[Philosopher " + phil.position + "] took " + (phil.left == this ? "left" : "right") + " fork");
-            if (this.owner != null && this.owner != phil && this.owner.state == State.Thinking) {
-                this.clean = true;
-            }
+        if (this.owner == phil)
+            return this.clean;
+
+        System.out.println(
+                "[Philosopher " + phil.position + "] requested " +
+                (phil.left == this ? "left" : "right") + " " +
+                (this.clean ? "clean" : "dirty") + " fork from " +
+                (owner == null ? "table" : "philosopher " + owner.position + ", which is " + owner.state));
+
+        if (this.owner == null || this.owner.state == State.Thinking || !clean) {
+            this.clean = true;
             this.owner = phil;
             return true;
         }
-
-        if (clean && owner == phil)
-            return true;
 
         return false;
     }
