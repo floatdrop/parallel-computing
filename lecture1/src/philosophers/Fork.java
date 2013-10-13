@@ -6,7 +6,7 @@ public class Fork {
 
     public synchronized boolean acquire(Philosopher phil) {
         if (this.owner == phil)
-            return this.clean;
+            return true;//this.clean;
 
         System.out.println(
                 "[Philosopher " + phil.position + "] requested " +
