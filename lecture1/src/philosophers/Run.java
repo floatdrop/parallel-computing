@@ -11,13 +11,15 @@ public class Run {
     public static void main(String[] args) throws Exception {
         parseArguments(args);
 
+        Table table = new Table();
+
         MyPhilosopher[] phils = new MyPhilosopher[count];
 
         Fork last = new Fork();
         Fork left = last;
         for (int i = 0; i < count; i++) {
             Fork right = (i == count - 1) ? last : new Fork();
-            phils[i] = new MyPhilosopher(i, left, right, eatingTime, thinkingTime);
+            phils[i] = new MyPhilosopher(i, left, right, eatingTime, thinkingTime, table);
             left = right;
         }
 
