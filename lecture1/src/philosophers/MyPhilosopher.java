@@ -14,9 +14,9 @@ public class MyPhilosopher extends Philosopher implements Runnable {
         while (!stopFlag) {
             think();
             try {
-                if (left.hold.tryLock(this.maxEatingTime * 2, TimeUnit.MILLISECONDS)) {
+                if (left.hold.tryLock(this.maxEatingTime / 2, TimeUnit.MILLISECONDS)) {
                     System.out.println("[Philosopher " + position + "] took left fork");
-                    if (right.hold.tryLock(this.maxEatingTime * 2, TimeUnit.MILLISECONDS)) {
+                    if (right.hold.tryLock(this.maxEatingTime / 2, TimeUnit.MILLISECONDS)) {
                         System.out.println("[Philosopher " + position + "] took right fork");
                         eat();
                         right.hold.unlock();
