@@ -35,15 +35,13 @@ public class Philosopher {
         this.state = State.Eating;
         thinkingTime += System.currentTimeMillis() - startWait;
         System.out.println("[Philosopher " + position + "] is eating");
-
-        left.clean = false;
-        right.clean = false;
-
         try {
             Thread.sleep(rnd.nextInt(maxEatingTime));
         } catch (InterruptedException e) { e.printStackTrace(); }
         eatingTime++;
-        System.out.println("[Philosopher " + position + "] finished eating");        
+        System.out.println("[Philosopher " + position + "] finished eating");
+        left.clean = false;
+        right.clean = false;
     }
 
     public void think() {
